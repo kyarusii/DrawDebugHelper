@@ -12,31 +12,44 @@ public static class DrawDebug
 	#region Wireframes
 
 	[Conditional(SYMBOL)]
-	public static void Line(Vector3 startPos, Vector3 endPos, Color color,
-		float thickness = 1.0f, float lifeTime = -1.0f) { }
+	public static void Line(Vector3 startPos, Vector3 endPos,
+		Color color,
+		float thickness = 1.0f, float lifeTime = -1.0f)
+	{
+		Drawer.Get().DrawLine(startPos, endPos, color, thickness, lifeTime);
+	}
 
 	[Conditional(SYMBOL)]
-	public static void Box(Vector3 center, Vector3 extent, Color color,
-		float thickness = 1.0f, float lifeTime = -1.0f) { }
+	public static void Box(Vector3 center, Vector3 extent,
+		Color color,
+		float thickness = 1.0f, float lifeTime = -1.0f)
+	{
+		Drawer.Get().DrawBox(center, extent, color, thickness, lifeTime);
+	}
 
 	[Conditional(SYMBOL)]
-	public static void Circle(Vector3 center, Vector3 normal, float radius, Color color,
+	public static void Circle(Vector3 center, Vector3 normal, float radius, 
+		Color color,
 		float thickness = 1.0f, float lifeTIme = -1.0f) { }
 
 	[Conditional(SYMBOL)]
-	public static void Disc(Vector3 center, Vector3 normal, float innerRadius, float outerRadius, Color color,
+	public static void Disc(Vector3 center, Vector3 normal, float innerRadius, float outerRadius, 
+		Color color,
 		float thickness = 1.0f, float lifeTIme = -1.0f) { }
 
 	[Conditional(SYMBOL)]
-	public static void Sphere(Vector3 center, float radius, Color color,
+	public static void Sphere(Vector3 center, float radius, 
+		Color color,
 		float thickness = 1.0f, float lifeTIme = -1.0f) { }
 
 	[Conditional(SYMBOL)]
-	public static void Cylinder(Vector3 center, Vector3 normal, float radius, float height, Color color,
+	public static void Cylinder(Vector3 center, Vector3 normal, float radius, float height, 
+		Color color,
 		float thickness = 1.0f, float lifeTIme = -1.0f) { }
 
 	[Conditional(SYMBOL)]
-	public static void Cone(Vector3 pivot, Vector3 normal, float radius, float height, Color color,
+	public static void Cone(Vector3 pivot, Vector3 normal, float radius, float height, 
+		Color color,
 		float thickness = 1.0f, float lifeTIme = -1.0f) { }
 
 	[Conditional(SYMBOL)]
@@ -45,24 +58,29 @@ public static class DrawDebug
 		float thickness = 1.0f, float lifeTIme = -1.0f) { }
 
 	[Conditional(SYMBOL)]
-	public static void Pyramid(Vector3 pivot, Vector3 normal, int segment, float sideLength, float height, Color color,
+	public static void Pyramid(Vector3 pivot, Vector3 normal, int segment, float sideLength, float height, 
+		Color color,
 		float thickness = 1.0f, float lifeTime = -1.0f) { }
 
 	[Conditional(SYMBOL)]
 	public static void AltPyramid(Vector3 pivot, Vector3 normal, int segment, float bottomSideLength,
-		float topSideLength, float height, Color color,
+		float topSideLength, float height, 
+		Color color,
 		float thickness = 1.0f, float lifeTime = -1.0f) { }
 
 	[Conditional(SYMBOL)]
-	public static void Capsule(Vector3 center, float radius, float height, Color color,
+	public static void Capsule(Vector3 center, float radius, float height, 
+		Color color,
 		float thickness = 1.0f, float lifeTIme = -1.0f) { }
 
 	[Conditional(SYMBOL)]
-	public static void Frustum(Vector3 eye, Vector3 target, Vector2 nearClip, Vector3 farClip, Color color,
+	public static void Frustum(Vector3 eye, Vector3 target, Vector2 nearClip, Vector3 farClip, 
+		Color color,
 		float thickness = 1.0f, float lifeTIme = -1.0f) { }
 
 	[Conditional(SYMBOL)]
-	public static void Mesh(Vector3 center, Quaternion rotation, Vector3 scale, Mesh mesh, Color color,
+	public static void Mesh(Vector3 center, Quaternion rotation, Vector3 scale, Mesh mesh, 
+		Color color,
 		float thickness = 1.0f, float lifeTime = -1.0f) { }
 
 	#endregion
@@ -77,7 +95,8 @@ public static class DrawDebug
 	/// <param name="color"></param>
 	/// <param name="lifeTIme"></param>
 	[Conditional(SYMBOL)]
-	public static void SolidBox(Vector3 center, Vector3 extent, Color color,
+	public static void SolidBox(Vector3 center, Vector3 extent, 
+		Color color,
 		float lifeTIme = -1.0f) { }
 
 	#endregion
@@ -93,7 +112,8 @@ public static class DrawDebug
 	/// <param name="color"></param>
 	/// <param name="lifeTIme"></param>
 	[Conditional(SYMBOL)]
-	public static void Text(Vector3 center, string text, float size, Color color,
+	public static void Text(Vector3 center, string text, float size, 
+		Color color,
 		float lifeTIme = -1.0f) { }
 
 	/// <summary>
@@ -103,7 +123,8 @@ public static class DrawDebug
 	/// <param name="color"></param>
 	/// <param name="lifeTIme"></param>
 	[Conditional(SYMBOL)]
-	public static void LocalGizmo(Transform transform, Color color,
+	public static void LocalGizmo(Transform transform, 
+		Color color,
 		float lifeTIme = -1.0f) { }
 
 	/// <summary>
@@ -114,7 +135,8 @@ public static class DrawDebug
 	/// <param name="color"></param>
 	/// <param name="lifeTIme"></param>
 	[Conditional(SYMBOL)]
-	public static void Coordinate(Vector3 position, Vector3 size, Color color,
+	public static void Coordinate(Vector3 position, Vector3 size, 
+		Color color,
 		float lifeTIme = -1.0f)
 	{
 	}
