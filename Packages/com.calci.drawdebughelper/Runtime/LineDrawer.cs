@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,7 +7,7 @@ namespace Calci.DDH
 {
 	public sealed class LineDrawer : MaskableGraphic
 	{
-		[Range(0.1f, 3.0f)] public float lineThickness = 2f;
+		[Range(0.1f, 3.0f)] public float lineThickness = 1f;
 		public Vector2[] points;
 
 		public bool relativeSize;
@@ -19,7 +18,6 @@ namespace Calci.DDH
 		public void SetPoints(Vector2[] newPoints)
 		{
 			points = newPoints;
-			// points = newPoints.Select(e => e + rectTransform.sizeDelta * 0.5f).ToArray();
 		}
 
 		[ContextMenu("SetDirty")]
@@ -28,35 +26,11 @@ namespace Calci.DDH
 			SetVerticesDirty();
 		}
 
-		private void OnDrawGizmos()
-		{
-			if (points != null)
-			{
-				bool isfirst = true;
-				Vector2 previous = Vector2.zero;
-				foreach (Vector2 point in points)
-				{
-					if (isfirst)
-					{
-						previous = point;
-						isfirst = false;
-						continue;
-					}
-					
-					Gizmos.DrawLine(previous, point);
-				}
-			}
-		}
-
 		protected override void OnPopulateMesh(VertexHelper vh)
 		{
 			if (points == null || points.Length < 2)
 			{
-				points = new[]
-				{
-					new Vector2(0f, 0f),
-					new Vector2(100f, 100f)
-				};
+				return;
 			}
 
 			int num = 2;

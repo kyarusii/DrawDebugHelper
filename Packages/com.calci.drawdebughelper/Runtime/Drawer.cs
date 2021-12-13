@@ -44,14 +44,10 @@ namespace Calci.DDH
 		private uint[] args = new uint[5] { 0, 0, 0, 0, 0 };
 		private Material wireframeMaterial;
 
-		private LineDrawer drawer = default;
-		
 		private void Init()
 		{
 			// argsBuffer = new ComputeBuffer(1, args.Length * sizeof(uint), ComputeBufferType.IndirectArguments);
 			wireframeMaterial = new Material(Shader.Find("Standard"));
-
-			drawer = FindObjectOfType<LineDrawer>();
 		}
 
 		#region DrawCalls
@@ -59,21 +55,17 @@ namespace Calci.DDH
 		internal void DrawLine(Vector3 startPos, Vector3 endPos, Color color, float thickness, float lifeTime)
 		{
 			var handle = new DrawingHandle();
+			var ld = DebugCanvas.Get().CreateLineDrawer();
+
+			ld.color = color;
+			ld.lineThickness = thickness;
+			
 			var context = new DrawingActionContext()
 			{
 				duration = lifeTime,
-				action = () =>
-				{
-					var start = Camera.main.WorldToScreenPoint(startPos);
-					var end = Camera.main.WorldToScreenPoint(endPos) ;
-					
-					drawer.SetPoints(new[]
-					{
-						new Vector2(start.x, start.y),
-						new Vector2(end.x, end.y),
-					});
-					drawer.SetVerticesDirty();
-				}
+				lineDrawer = ld,
+				startPos = startPos,
+				endPos = endPos,
 			};
 			
 			handles.Add(handle.Id, handle);
@@ -124,7 +116,17 @@ namespace Calci.DDH
 					
 					if (context is DrawingActionContext actionContext)
 					{
-						actionContext.action();
+						var start = Camera.main.WorldToScreenPoint(actionContext.startPos);
+						var end = Camera.main.WorldToScreenPoint(actionContext.endPos);
+						
+						actionContext.lineDrawer.SetPoints(new []
+						{
+							new Vector2(start.x, start.y),
+							new Vector2(end.x, end.y),
+						});
+						
+						actionContext.lineDrawer.SetVerticesDirty();
+						
 						continue;
 					}
 					
@@ -142,8 +144,15 @@ namespace Calci.DDH
 			// cleanup
 			foreach (DrawingHandle handle in pooledList)
 			{
+				var context = contextMap[handle];
+				
 				handles.Remove(handle.Id);
 				contextMap.Remove(handle);
+
+				if (context is DrawingActionContext actionContext)
+				{
+					Destroy(actionContext.lineDrawer.gameObject);
+				}
 			}
 			
 			ListPool<DrawingHandle>.Release(pooledList);
@@ -164,6 +173,8 @@ namespace Calci.DDH
 
 	internal class DrawingActionContext : DrawingContext
 	{
-		public Action action;
+		public LineDrawer lineDrawer;
+		public Vector3 startPos;
+		public Vector3 endPos;
 	}
 }

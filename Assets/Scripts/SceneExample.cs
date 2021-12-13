@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Example
@@ -8,11 +6,17 @@ namespace Example
     {
         public GameObject p1;
         public GameObject p2;
-        
+        public GameObject p3;
+        public GameObject p4;
+
         // Start is called before the first frame update
         private void Start()
         {
-            DrawDebug.Line(p1.transform.position, p2.transform.position, Color.red, 1f, 10f);
+            var startPos = p1.transform.position;
+            var endPos = p2.transform.position;
+            
+            DrawDebug.Line(startPos, endPos, Color.white, 1f, 10f);
+            DrawDebug.Line(p3.transform.position, p4.transform.position, Color.red, 1f, 10f);
         }
     }
 }
