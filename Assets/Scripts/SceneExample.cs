@@ -6,10 +6,13 @@ namespace Example
 {
     public class SceneExample : MonoBehaviour
     {
+        public GameObject p1;
+        public GameObject p2;
+        
         // Start is called before the first frame update
         private void Start()
         {
-            DrawDebug.Box(Vector3.zero, Vector3.one, Color.white, 1, 10f);
+            DrawDebug.Line(p1.transform.position, p2.transform.position, Color.red, 1f, 10f);
         }
     }
 }

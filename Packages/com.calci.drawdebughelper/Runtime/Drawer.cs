@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Pool;
 
 namespace Calci.DDH
 {
@@ -43,10 +44,14 @@ namespace Calci.DDH
 		private uint[] args = new uint[5] { 0, 0, 0, 0, 0 };
 		private Material wireframeMaterial;
 
+		private LineDrawer drawer = default;
+		
 		private void Init()
 		{
 			// argsBuffer = new ComputeBuffer(1, args.Length * sizeof(uint), ComputeBufferType.IndirectArguments);
 			wireframeMaterial = new Material(Shader.Find("Standard"));
+
+			drawer = FindObjectOfType<LineDrawer>();
 		}
 
 		#region DrawCalls
@@ -54,6 +59,25 @@ namespace Calci.DDH
 		internal void DrawLine(Vector3 startPos, Vector3 endPos, Color color, float thickness, float lifeTime)
 		{
 			var handle = new DrawingHandle();
+			var context = new DrawingActionContext()
+			{
+				duration = lifeTime,
+				action = () =>
+				{
+					var start = Camera.main.WorldToScreenPoint(startPos);
+					var end = Camera.main.WorldToScreenPoint(endPos) ;
+					
+					drawer.SetPoints(new[]
+					{
+						new Vector2(start.x, start.y),
+						new Vector2(end.x, end.y),
+					});
+					drawer.SetVerticesDirty();
+				}
+			};
+			
+			handles.Add(handle.Id, handle);
+			contextMap.Add(handle, context);
 		}
 
 		internal void DrawBox(Vector3 center, Vector3 extent,
@@ -78,18 +102,29 @@ namespace Calci.DDH
 
 		public void Abort(DrawingHandle handle)
 		{
+			// handles.Remove(handle.Id);
 		}
 
 		private void Update()
 		{
+			var pooledList = ListPool<DrawingHandle>.Get();
+
 			foreach (DrawingHandle handle in handles.Values)
 			{
 				var context = contextMap[handle];
+				
 				if (handle.IsDrawing)
 				{
 					if (Time.time - handle.StartTime >= context.duration)
 					{
+						pooledList.Add(handle);
 						handle.Abort();
+						continue;
+					}
+					
+					if (context is DrawingActionContext actionContext)
+					{
+						actionContext.action();
 						continue;
 					}
 					
@@ -102,7 +137,16 @@ namespace Calci.DDH
 			
 			// draw here
 			// Graphics.DrawMeshInstancedIndirect();
+
 			
+			// cleanup
+			foreach (DrawingHandle handle in pooledList)
+			{
+				handles.Remove(handle.Id);
+				contextMap.Remove(handle);
+			}
+			
+			ListPool<DrawingHandle>.Release(pooledList);
 		}
 	}
 
@@ -116,5 +160,10 @@ namespace Calci.DDH
 		public Mesh mesh;
 		public Vector3 position;
 		public float duration;
+	}
+
+	internal class DrawingActionContext : DrawingContext
+	{
+		public Action action;
 	}
 }
