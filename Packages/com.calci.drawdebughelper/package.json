@@ -1,0 +1,29 @@
+{
+  "name": "com.calci.drawdebughelper",
+  "version": "1.0.0",
+  "displayName": "Draw Debug Helper",
+  "description": "This package provides drawing APIs for debugging in Unity game view.",
+  "unity": "2019.4",
+  "unityRelease": "0f1",
+  "documentationUrl": "https://github.com/seonghwan-dev/drawdebughelper/wiki",
+  "changelogUrl": "https://github.com/seonghwan-dev/drawdebughelper/blob/main/CHANGELOG.md",
+  "licenseUrl": "https://github.com/seonghwan-dev/drawdebughelper/blob/main/LICENSE",
+  "author": {
+    "name": "Seonghwan",
+    "email": "seonghwan@pm.me",
+    "url": "https://github.com/seonghwan-dev"
+  },
+  "homepage": "https://github.com/seonghwan-dev/drawdebughelper",
+  "bugs": {
+    "url": "https://github.com/seonghwan-dev/drawdebughelper/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@github.com:seonghwan-dev/drawdebughelper.git"
+  },
+  "license": "MIT",
+  "keywords": [
+    "utility",
+    "unity"
+  ]
+}

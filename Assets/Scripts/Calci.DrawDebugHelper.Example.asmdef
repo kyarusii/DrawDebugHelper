@@ -1,0 +1,16 @@
+{
+    "name": "Calci.DrawDebugHelper.Example",
+    "rootNamespace": "Example",
+    "references": [
+        "GUID:8084b4f16f4f0a54b966cc7ffb642193"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
